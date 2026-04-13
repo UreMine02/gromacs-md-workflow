@@ -288,7 +288,7 @@ gmx genion -s ions.tpr -o solv_ions.gro -p topol.top -pname NA -nname CL -neutra
 
 -> select the group of SOL(water)  
 
-✅ Verification: open topol.top, see at the bottom of the file, filled with Cl
+✅ Verification: open topol.top, see at the bottom of the file, filled with Cl or Na
 
 ---
 
