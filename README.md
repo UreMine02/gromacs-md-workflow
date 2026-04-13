@@ -5,20 +5,20 @@ The Gromacs MD-tutorial includes serveral steps
 
 ---
 
-# Environment preparation
+## Environment preparation
 
 Download Ubuntu or other Linux platform to do the experiment.
 
 ---
 
-## 🔹 Step 1: Update your system
+### 🔹 Step 1: Update your system
 ```bash
 sudo apt update && sudo apt upgrade -y
 ```
 
 ---
 
-## 🔹 Step 2: Install dependencies for GROMACS
+### 🔹 Step 2: Install dependencies for GROMACS
 ```bash
 sudo apt install build-essential cmake git libfftw3-dev libgsl-dev \
 libboost-all-dev libeigen3-dev libxml2-dev libexpat1-dev \
@@ -27,7 +27,7 @@ libncurses5-dev libopenmpi-dev openmpi-bin -y
 
 ---
 
-## 🔹 Step 3: Download and compile GROMACS
+### 🔹 Step 3: Download and compile GROMACS
 ```bash
 cd ~
 wget ftp://ftp.gromacs.org/pub/gromacs/gromacs-2023.3.tar.gz
@@ -41,7 +41,7 @@ sudo make install
 
 ---
 
-## 🔹 Step 4: Source GROMACS in every session
+### 🔹 Step 4: Source gromacs in every session
 ```bash
 echo 'source /usr/local/gromacs/bin/GMXRC' >> ~/.bashrc
 source ~/.bashrc
@@ -49,7 +49,7 @@ source ~/.bashrc
 
 ---
 
-## 🔹 Step 5: Install system dependencies for building Python
+### 🔹 Step 5: Install system dependencies for building Python
 ```bash
 sudo apt update
 sudo apt install build-essential libssl-dev zlib1g-dev \
@@ -59,14 +59,14 @@ libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-d
 
 ---
 
-## 🔹 Step 6: Install pyenv (Python version manager)
+### 🔹 Step 6: Install pyenv (Python version manager)
 ```bash
 curl https://pyenv.run | bash
 ```
 
 ---
 
-### Add to ~/.bashrc or ~/.zshrc
+#### Add to ~/.bashrc or ~/.zshrc
 ```bash
 export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init --path)"
@@ -76,7 +76,7 @@ eval "$(pyenv virtualenv-init -)"
 
 ---
 
-### Install and set Python 3.7.17
+#### Install and set Python 3.7.17
 ```bash
 pyenv install 3.7.17
 pyenv global 3.7.17
@@ -84,21 +84,21 @@ pyenv global 3.7.17
 
 ---
 
-### Create a virtual environment
+#### Create a virtual environment
 ```bash
 python -m venv gromacs_env
 ```
 
 ---
 
-### Activate the environment
+#### Activate the environment
 ```bash
 source gromacs_env/bin/activate
 ```
 
 ---
 
-## 🔹 Step 7: Install required Python packages
+### 🔹 Step 7: Install required Python packages
 ```bash
 python3.7 -m pip install --upgrade pip
 python3.7 -m pip install numpy
@@ -107,14 +107,14 @@ python3.7 -m pip install networkx==1.11
 
 ---
 
-# Verification Commands
+### Verification Commands
 
-### To test GROMACS:
+#### To test GROMACS:
 ```bash
 gmx --version
 ```
 
-### To test Python packages:
+#### To test Python packages:
 ```bash
 python3.7 -c "import numpy; print(numpy.__version__)"
 python3.7 -c "import networkx as nx; print(nx.__version__)"
@@ -122,11 +122,11 @@ python3.7 -c "import networkx as nx; print(nx.__version__)"
 
 ---
 
-# MD simulation
+## MD simulation
 
 ---
 
-## 🔹 Step 1: Data cleaning
+### 🔹 Step 1: Data cleaning
 
 download .pdb file from https://www.rcsb.org/  
 download Discovery Studio  
@@ -145,7 +145,7 @@ Save and name: complex.pdb
 
 ---
 
-## 🔹 Step 2: Data Preparation
+### 🔹 Step 2: Data Preparation
 
 create gmx folder - contains all of data for a MD process:
 ```bash
@@ -160,7 +160,7 @@ run ls -> complex.pdb  protein.pdb  ligand.mol2
 
 ---
 
-## 🔹 Step 3: Environment Setup
+### 🔹 Step 3: Environment Setup
 ```bash
 source ~/gromacs_env/bin/activate (Depend on where you set up the gromacs_env)
 source /usr/local/gromacs/bin/GMXRC
@@ -169,7 +169,7 @@ cd /mnt/c/Users/ADMIN/Downloads/gmx
 
 ---
 
-## 🔹 Step 4: Protein convert
+### 🔹 Step 4: Protein convert
 
 download force field environment on https://mackerell.umaryland.edu/charmm_ff.shtml#gromacs  
 tar -zxvf charmm36-jul2022.ff.tgz  
@@ -183,7 +183,7 @@ Select 1 for charmmFF, Select 1 for Tip3P, Select 0 for NH3+, Select 0 for COO-
 
 ---
 
-## 🔹 Step 5: Ligand Topology Preparation
+### 🔹 Step 5: Ligand Topology Preparation
 
 **Important**: Add Hidro to Ligand and Fix Ligand file  
 
@@ -209,7 +209,7 @@ python3.7 cgenff_charmm2gmx_py3_nx1.py ligand ligand_fix.mol2 ligand_fix.str cha
 
 ---
 
-## 🔹 Step 6: Build the Complex
+### 🔹 Step 6: Build the Complex
 
 ```bash
 gmx editconf -f ligand_ini.pdb -o ligand.gro
@@ -258,7 +258,7 @@ ligand     1 (change the ligand to the corresponding name)
 
 ---
 
-## 🔹 Step 7: Solvation
+### 🔹 Step 7: Solvation
 ```bash
 gmx editconf -f complex.gro -o newbox.gro -bt dodecahedron -d 1.0
 gmx solvate -cp newbox.gro -cs spc216.gro -p topol.top -o solv.gro
@@ -266,7 +266,7 @@ gmx solvate -cp newbox.gro -cs spc216.gro -p topol.top -o solv.gro
 
 ---
 
-## 🔹 Step 8: Adding Ions
+### 🔹 Step 8: Adding Ions
 
 download ions.mdp file (or build your own)
 
@@ -277,7 +277,7 @@ gmx grompp -f ions.mdp -c solv.gro -p topol.top -o ions.tpr
 If occur error: number of coordinates in coordinate file (solv.gro, 33518) does not match topology (topol.top, 2633)  
 open topol.top, scroll to the bottom of the file -> fix line break  
 
-# If warnings occur:
+#### If warnings occur:
 ```bash
 gmx grompp -f ions.mdp -c solv.gro -p topol.top -o ions.tpr -maxwarn 1
 ```
@@ -292,12 +292,12 @@ gmx genion -s ions.tpr -o solv_ions.gro -p topol.top -pname NA -nname CL -neutra
 
 ---
 
-## 🔹 Step 9: Energy Minimization
+### 🔹 Step 9: Energy Minimization
 ```bash
 gmx grompp -f em.mdp -c solv_ions.gro -p topol.top -o em.tpr
 ```
 
-# If warnings occur:
+#### If warnings occur:
 ```bash
 gmx grompp -f em.mdp -c solv_ions.gro -p topol.top -o em.tpr -maxwarn 1
 ```
@@ -310,7 +310,7 @@ gmx mdrun -v -deffnm em
 
 ---
 
-## 🔹 Step 10: Equilibration - NVT
+### 🔹 Step 10: Equilibration - NVT
 
 ```bash
 gmx make_ndx -f ligand.gro -o index_ligand.ndx
@@ -356,13 +356,13 @@ gmx mdrun -deffnm nvt -v
 
 ---
 
-## 🔹 Step 11: Equilibration - NPT
+### 🔹 Step 11: Equilibration - NPT
 
 ```bash
 gmx grompp -f npt.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -n index.ndx -o npt.tpr
 ```
 
-# If warnings occur:
+#### If warnings occur:
 ```bash
 gmx grompp -f npt.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -n index.ndx -o npt.tpr -maxwarn 1
 ```
@@ -373,7 +373,7 @@ gmx mdrun -deffnm npt -v
 
 ---
 
-## 🔹 Step 12: Production MD
+### 🔹 Step 12: Production MD
 
 create md.mdp or custom your own (you can set up the number of steps-simulation time by changing nstep field)
 
