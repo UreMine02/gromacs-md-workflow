@@ -286,7 +286,7 @@ gmx grompp -f ions.mdp -c solv.gro -p topol.top -o ions.tpr -maxwarn 1
 gmx genion -s ions.tpr -o solv_ions.gro -p topol.top -pname NA -nname CL -neutral
 ```
 
--> select the group of your ligand  
+-> select the group of SOL(water)  
 
 ✅ Verification: open topol.top, see at the bottom of the file, filled with Cl
 
