@@ -164,6 +164,7 @@ run ls -> complex.pdb  protein.pdb  ligand.mol2
 ```bash
 source ~/gromacs_env/bin/activate (Depend on where you set up the gromacs_env)
 source /usr/local/gromacs/bin/GMXRC
+source /usr/local/gromacs-gpu/bin/GMXRC (if you have cuda)
 cd /mnt/c/Users/ADMIN/Downloads/gmx
 ```
 
