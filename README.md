@@ -354,7 +354,15 @@ download nvt.mdp or custom your own
 gmx grompp -f nvt.mdp -c em.gro -r em.gro -p topol.top -n index.ndx -o nvt.tpr
 gmx mdrun -deffnm nvt -v
 ```
-
+or
+```bash
+gmx mdrun -deffnm nvt -v \
+-nb gpu -pme gpu \
+-ntmpi 2 -ntomp 8 \
+-gpu_id 01 \
+-npme 1
+(if you use GPU)
+```
 ---
 
 ### 🔹 Step 11: Equilibration - NPT
@@ -371,7 +379,14 @@ gmx grompp -f npt.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -n index.ndx
 ```bash
 gmx mdrun -deffnm npt -v
 ```
-
+or if you use gpu (multi gpu)
+```bash
+gmx mdrun -deffnm npt -v \
+-nb gpu -pme gpu \
+-ntmpi 2 -ntomp 8 \
+-gpu_id 01 \
+-npme 1
+```
 ---
 
 ### 🔹 Step 12: Production MD
