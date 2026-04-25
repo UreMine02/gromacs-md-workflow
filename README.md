@@ -354,14 +354,20 @@ download nvt.mdp or custom your own
 gmx grompp -f nvt.mdp -c em.gro -r em.gro -p topol.top -n index.ndx -o nvt.tpr
 gmx mdrun -deffnm nvt -v
 ```
-or
+or (if you use GPU)
 ```bash
 gmx mdrun -deffnm nvt -v \
 -nb gpu -pme gpu \
 -ntmpi 2 -ntomp 8 \
 -gpu_id 01 \
 -npme 1
-(if you use GPU)
+```
+or
+```bash
+gmx mdrun -deffnm nvt -v \
+-nb gpu -pme gpu \
+-ntmpi 1 -ntomp 16 \
+-gpu_id 0
 ```
 ---
 
