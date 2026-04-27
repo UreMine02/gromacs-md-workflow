@@ -403,6 +403,13 @@ create md.mdp or custom your own (you can set up the number of steps-simulation 
 gmx grompp -f md.mdp -c npt.gro -t npt.cpt -p topol.top -n index.ndx -o md_ligand.tpr
 gmx mdrun -deffnm md_ligand -v
 ```
+or if it is single GPU
+```bash
+gmx mdrun -deffnm md_ligand -v \
+-nb gpu -pme gpu \
+-ntmpi 1 -ntomp 16 \
+-gpu_id 0
+```
 
 <img width="1464" height="460" alt="image" src="https://github.com/user-attachments/assets/39570b42-ecf6-4ea8-848e-47c085d1166a" />
 
