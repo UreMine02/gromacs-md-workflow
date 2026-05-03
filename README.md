@@ -356,22 +356,11 @@ gmx mdrun -deffnm nvt -v
 ```
 or (if you use GPU)
 ```bash
-gmx mdrun -deffnm nvt -v \
--nb gpu -pme gpu \
--ntmpi 2 -ntomp 8 \
--gpu_id 01 \
--npme 1
-```
-or
-```bash
-gmx mdrun -deffnm nvt -v \
--nb gpu -pme gpu \
--ntmpi 1 -ntomp 16 \
--gpu_id 0
+gmx mdrun -deffnm nvt -v -nb gpu -pme gpu -ntmpi 1 -ntomp 16 -gpu_id 0
 ```
 ---
 
-### 🔹 Step 11: Equilibration - NPT
+### 🔹 Step 11: Equilibration - NPT early
 
 ```bash
 gmx grompp -f npt.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -n index.ndx -o npt.tpr
@@ -385,16 +374,19 @@ gmx grompp -f npt.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -n index.ndx
 ```bash
 gmx mdrun -deffnm npt -v
 ```
-or if you use gpu (multi gpu)
+or if you use gpu 
 ```bash
-gmx mdrun -deffnm npt -v \
--nb gpu -pme gpu \
--ntmpi 2 -ntomp 8 \
--gpu_id 01 \
--npme 1
+gmx mdrun -deffnm npt -v -nb gpu -pme gpu -ntmpi 1 -ntomp 16 -gpu_id 0
 ```
 ---
-
+### 🔹 Step 11b: Equilibration - NPT late
+delete define in npt.mdp file (to release protein and ligand)
+```bash
+gmx grompp -f npt_release_complex.mdp -c npt.gro -t npt.cpt -p topol.top -n index.ndx -o npt_release.tpr
+```
+```bash
+gmx mdrun -deffnm npt_release -v -nb gpu -pme gpu -ntmpi 1 -ntomp 16 -gpu_id 0
+```
 ### 🔹 Step 12: Production MD
 
 create md.mdp or custom your own (you can set up the number of steps-simulation time by changing nstep field)
