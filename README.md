@@ -392,7 +392,7 @@ gmx mdrun -deffnm npt_release -v -nb gpu -pme gpu -ntmpi 1 -ntomp 16 -gpu_id 0
 create md.mdp or custom your own (you can set up the number of steps-simulation time by changing nstep field)
 
 ```bash
-gmx grompp -f md.mdp -c npt.gro -t npt.cpt -p topol.top -n index.ndx -o md_ligand.tpr
+gmx grompp -f md.mdp -c npt_release.gro -t npt_release.cpt -p topol.top -n index.ndx -o md_ligand.tpr
 gmx mdrun -deffnm md_ligand -v
 ```
 or if it is single GPU
