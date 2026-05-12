@@ -1,0 +1,22 @@
+1. Download apo protein from UniProt
+2. Convert to gro file: gmx pdb2gmx -f protein.pdb -o protein_processed.gro -ter 
+3. Solvation: 
+  3.1. Define box: gmx editconf -f protein_processed.gro -o newbox.gro -bt cubic -d 1.0 -c
+  3.2. Solvate: gmx solvate -cp newbox.gro -cs spc216.gro -o solv.gro -p topol.top
+4. Add ions: 
+  4.1. gmx grompp -f ions.mdp -c solv.gro -p topol.top -o ions.tpr
+  4.2. gmx genion -s ions.tpr -o solv_ions.gro -p topol.top -pname NA -nname CL -neutral
+5. Energy Minimization
+  5.1. gmx grompp -f em.mdp -c solv_ions.gro -p topol.top -o em.tpr
+  5.2. gmx mdrun -v -deffnm em -ntmpi 1 -ntomp 8
+6. Equilibration - NVT
+  6.1. gmx grompp -f nvt.mdp -c em.gro -r em.gro -p topol.top -o nvt.tpr
+  6.2. gmx mdrun -deffnm nvt -v -nb gpu -pme gpu -ntmpi 1 -ntomp 16 -gpu_id 0
+7. Equilibration - NPT early
+  7.1. gmx grompp -f npt.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -o npt.tpr
+  7.2. gmx mdrun -deffnm npt -v -nb gpu -pme gpu -ntmpi 1 -ntomp 16 -gpu_id 0
+8. Equilibration - NPT late
+  8.1. gmx grompp -f npt_release_complex.mdp -c npt.gro -t npt.cpt -p topol.top -o npt_release.tpr
+9. MD production
+  9.1. gmx grompp -f md.mdp -c npt_release.gro -t npt_release.cpt -p topol.top -o md_apo.tpr
+  9.2. gmx mdrun -deffnm md_apo -v -nb gpu -pme gpu -ntmpi 1 -ntomp 16 -gpu_id 0
