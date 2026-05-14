@@ -17,6 +17,7 @@
   7.2. gmx mdrun -deffnm npt -v -nb gpu -pme gpu -ntmpi 1 -ntomp 16 -gpu_id 0
 8. Equilibration - NPT late
   8.1. gmx grompp -f npt_release_complex.mdp -c npt.gro -t npt.cpt -p topol.top -o npt_release.tpr
+  8.2. gmx mdrun -deffnm npt_release -v -nb gpu -pme gpu -ntmpi 1 -ntomp 16 -gpu_id 0
 9. MD production
   9.1. gmx grompp -f md.mdp -c npt_release.gro -t npt_release.cpt -p topol.top -o md_apo.tpr
   9.2. gmx mdrun -deffnm md_apo -v -nb gpu -pme gpu -ntmpi 1 -ntomp 16 -gpu_id 0
