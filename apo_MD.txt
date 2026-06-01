@@ -5,7 +5,7 @@
   3.2. Solvate: gmx solvate -cp newbox.gro -cs spc216.gro -o solv.gro -p topol.top
 4. Add ions: 
   4.1. gmx grompp -f ions.mdp -c solv.gro -p topol.top -o ions.tpr
-  4.2. gmx genion -s ions.tpr -o solv_ions.gro -p topol.top -pname NA -nname CL -neutral
+  4.2. gmx genion -s ions.tpr -o solv_ions.gro -p topol.top -pname NA -nname CL -neutral -conc 0.15
 5. Energy Minimization
   5.1. gmx grompp -f em.mdp -c solv_ions.gro -p topol.top -o em.tpr
   5.2. gmx mdrun -v -deffnm em -ntmpi 1 -ntomp 8
