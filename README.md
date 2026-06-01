@@ -261,7 +261,7 @@ ligand     1 (change the ligand to the corresponding name)
 
 ### 🔹 Step 7: Solvation
 ```bash
-gmx editconf -f complex.gro -o newbox.gro -bt dodecahedron -d 1.0
+gmx editconf -f complex.gro -o newbox.gro -bt cubic -d 1.0
 gmx solvate -cp newbox.gro -cs spc216.gro -p topol.top -o solv.gro
 ```
 
@@ -284,7 +284,7 @@ gmx grompp -f ions.mdp -c solv.gro -p topol.top -o ions.tpr -maxwarn 1
 ```
 
 ```bash
-gmx genion -s ions.tpr -o solv_ions.gro -p topol.top -pname NA -nname CL -neutral
+gmx genion -s ions.tpr -o solv_ions.gro -p topol.top -pname NA -nname CL -neutral -conc 0.15
 ```
 
 -> select the group of SOL(water)  
