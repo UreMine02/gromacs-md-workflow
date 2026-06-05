@@ -306,7 +306,7 @@ gmx grompp -f em.mdp -c solv_ions.gro -p topol.top -o em.tpr -maxwarn 1
 -> start energy minimization
 
 ```bash
-gmx mdrun -v -deffnm em
+gmx mdrun -v -deffnm em -ntmpi 1 -ntomp 16
 ```
 
 ---
