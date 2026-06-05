@@ -261,7 +261,7 @@ ligand     1 (change the ligand to the corresponding name)
 
 ### 🔹 Step 7: Solvation
 ```bash
-gmx editconf -f complex.gro -o newbox.gro -bt cubic -d 1.0
+gmx editconf -f complex.gro -o newbox.gro -bt cubic -d 1.0 -c
 gmx solvate -cp newbox.gro -cs spc216.gro -p topol.top -o solv.gro
 ```
 
